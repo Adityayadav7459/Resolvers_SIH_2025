@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AptitudeX & Career Explorer</title>
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Main stylesheet (kept unchanged) -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Meta -->
+  <meta name="description" content="AI-powered aptitude, courses, college search and interactive career mapping." />
+</head>
+<body>
+  <!-- Particles background (kept lively as requested) -->
+  <div id="particles" class="bg-particles" aria-hidden="true"></div>
+
+  <!-- Header / Navbar -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="logo">
+        <i class="fa-solid fa-robot"></i>
+        <span class="brand">AptitudeX</span>
+      </div>
+
+      <nav class="nav">
+        <ul class="nav-links">
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#career-mapping">Career Mapping</a></li>
+          <li><a href="#college-search">College Search</a></li>
+          <li><a href="#chat">Chat</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="login-btn" class="btn btn-login" aria-label="Login">Login</button>
+        <button id="signup-btn" class="btn btn-signup" aria-label="Signup">Signup</button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <!-- Hero / Dashboard -->
+    <section id="dashboard" class="section dashboard section-pad">
+      <div class="container">
+        <h1 class="section-title">Welcome to AptitudeX</h1>
+        <p class="lead">Discover your strengths. Map careers across levels from Class 10 to PhD.</p>
+
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 id="quiz-score">--</h3>
+            <p>Latest Aptitude Score</p>
+          </div>
+          <div class="metric-card">
+            <h3 id="career-matches">0</h3>
+            <p>Career Matches</p>
+          </div>
+          <div class="metric-card">
+            <h3 id="college-searches">0</h3>
+            <p>College Searches</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI-Powered Aptitude Section (center aligned) -->
+    <section id="quiz" class="section aptitude-section section-pad">
+      <div class="container section-inner">
+        <h2 class="section-title">AI-Powered Aptitude Assessment</h2>
+        <p class="section-sub">Quick 4-question assessment to guide careers and learning paths.</p>
+
+        <div class="quiz-wrapper">
+          <button id="start-quiz" class="btn primary">Start Quiz</button>
+
+          <form id="quiz-form" class="quiz-form" aria-label="Aptitude quiz" novalidate style="display:none;">
+            <div class="question">
+              <label>1. You enjoy solving logical problems and puzzles?</label>
+              <div class="options">
+                <label class="radio-option"><input type="radio" name="q1" value="yes"> Yes</label>
+                <label class="radio-option"><input type="radio" name="q1" value="no"> No</label>
+                <label class="radio-option"><input type="radio" name="q1" value="maybe"> Sometimes</label>
+              </div>
+            </div>
+
+            <div class="question">
+              <label>2. You prefer structured analytical tasks (math, coding, finance)?</label>
+              <div class="options">
+                <label class="radio-option"><input type="radio" name="q2" value="yes"> Yes</label>
+                <label class="radio-option"><input type="radio" name="q2" value="no"> No</label>
+                <label class="radio-option"><input type="radio" name="q2" value="maybe"> Sometimes</label>
+              </div>
+            </div>
+
+            <div class="question">
+              <label>3. Are you drawn to creative fields (design, arts, storytelling)?</label>
+              <div class="options">
+                <label class="radio-option"><input type="radio" name="q3" value="yes"> Yes</label>
+                <label class="radio-option"><input type="radio" name="q3" value="no"> No</label>
+                <label class="radio-option"><input type="radio" name="q3" value="maybe"> Sometimes</label>
+              </div>
+            </div>
+
+            <div class="question">
+              <label>4. Do you enjoy understanding people, behaviour or counseling?</label>
+              <div class="options">
+                <label class="radio-option"><input type="radio" name="q4" value="yes"> Yes</label>
+                <label class="radio-option"><input type="radio" name="q4" value="no"> No</label>
+                <label class="radio-option"><input type="radio" name="q4" value="maybe"> Sometimes</label>
+              </div>
+            </div>
+
+            <div class="quiz-actions">
+              <div id="quiz-progress" class="progress-container" aria-hidden="true">
+                <div class="progress-bar" style="width: 0%"></div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" id="submit-quiz" class="btn primary">Submit</button>
+                <button type="button" id="reset-quiz" class="btn">Reset</button>
+              </div>
+            </div>
+          </form>
+
+          <div id="quiz-result" class="quiz-result" aria-live="polite" style="display:none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Courses -->
+    <section id="courses" class="section section-pad">
+      <div class="container">
+        <h2 class="section-title">Popular Courses</h2>
+        <div class="courses-grid" id="courses-list">
+          <!-- Course cards rendered in DOM -->
+          <div class="course-card" data-course="computer_science">
+            <div class="card-head"><i class="fa-solid fa-laptop-code"></i></div>
+            <h4 class="card-title">Computer Science</h4>
+            <p class="card-desc">Programming, systems, ML & AI.</p>
+            <button class="btn card-btn" data-course="computer_science">Explore</button>
+          </div>
+
+          <div class="course-card" data-course="engineering">
+            <div class="card-head"><i class="fa-solid fa-cogs"></i></div>
+            <h4 class="card-title">Engineering</h4>
+            <p class="card-desc">Core engineering streams & projects.</p>
+            <button class="btn card-btn" data-course="engineering">Explore</button>
+          </div>
+
+          <div class="course-card" data-course="finance">
+            <div class="card-head"><i class="fa-solid fa-chart-line"></i></div>
+            <h4 class="card-title">Finance</h4>
+            <p class="card-desc">Markets, banking, analytics & fintech.</p>
+            <button class="btn card-btn" data-course="finance">Explore</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Career Mapping (vertical partitions by academic level) -->
+    <section id="career-mapping" class="section section-pad career-mapping">
+      <div class="container">
+        <h2 class="section-title">Interactive Career Mapping</h2>
+        <p class="section-sub">Explore career fields across academic levels. Click the "Plan" button in a column for dynamic options.</p>
+
+        <div class="levels-grid" id="levels-grid" role="region" aria-label="Career mapping by academic levels">
+          <!-- JS will render 5 vertical columns (Secondary, Senior Secondary, Undergraduate, Postgraduate, PhD) -->
+        </div>
+      </div>
+    </section>
+
+    <!-- College Search -->
+    <section id="college-search" class="section section-pad">
+      <div class="container">
+        <h2 class="section-title">College Search</h2>
+        <p class="section-sub">Search colleges by city or specialization</p>
+
+        <div class="search-row">
+          <input id="search-location" type="text" placeholder="Enter city or course (e.g. Indore, Computer Science)" aria-label="Search location" />
+          <button id="search-btn" class="btn">Search</button>
+        </div>
+
+        <div id="college-results" class="college-results" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- Chat -->
+    <section id="chat" class="section section-pad">
+      <div class="container">
+        <h2 class="section-title">Chat with Advisor</h2>
+        <div class="chat-container">
+          <div id="chat-output" class="chat-output" aria-live="polite"></div>
+          <div class="chat-input-row">
+            <input id="chat-input" type="text" placeholder="Ask about careers, colleges, courses." aria-label="Chat input" />
+            <button id="chat-send" class="btn">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal (shared for all interactive content) -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <button class="modal-close" id="modal-close" aria-label="Close modal"><i class="fa fa-times"></i></button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer section-pad">
+    <div class="container">
+      <small>© AptitudeX — Built for students. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- App script -->
+  <script src="script3.js"></script>
+</body>
+</html>
